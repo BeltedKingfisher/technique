@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 //11-4-2025
 /*
@@ -39,3 +40,33 @@ public class Kata
     return newString.ToString();
   }
 }
+
+//11-6-2025
+/*Write a function partlist that gives all the ways to divide a list (an array) of at least two elements into two non-empty parts.
+
+Each two non empty parts will be in a pair.
+Each part will be in a string.
+Elements of a pair must be in the same order as in the original array.
+a = ["az", "toto", "picaro", "zone", "kiwi"] -->
+[["az", "toto picaro zone kiwi"], ["az toto", "picaro zone kiwi"], ["az toto picaro", "zone kiwi"], ["az toto picaro zone", "kiwi"]] */
+
+public class PartList
+{
+    public static string[][] Partlist(string[] arr) 
+    {
+        var finalList = new List<string[]>();
+      
+        for(int i = 1; i < arr.Length; i++){
+          var firstElement = string.Join(" ", arr, 0, i);
+          var secondElement = string.Join(" ", arr, i, arr.Length - i);
+          var elementList = new List<string>();
+          elementList.Add(firstElement);
+          elementList.Add(secondElement);
+          finalList.Add(elementList.ToArray());          
+        }
+      
+      return finalList.ToArray();
+    }
+}
+
+//11-6-25 Notes: Ended up using ChatGPT for help finding solution. My logic was off with the iterations beginning and ending where they needed to, and also with unnecessary use of StringBuilder for first and second Elements. Key takeaway is that string.Join's fourth parameter is COUNT of elements to take, NOT ENDING INDEX of selected elements.
