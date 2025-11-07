@@ -69,4 +69,16 @@ public class PartList
     }
 }
 
-//11-6-25 Notes: Ended up using ChatGPT for help finding solution. My logic was off with the iterations beginning and ending where they needed to, and also with unnecessary use of StringBuilder for first and second Elements. Key takeaway is that string.Join's fourth parameter is COUNT of elements to take, NOT ENDING INDEX of selected elements.
+//NOTES: Ended up using ChatGPT for help finding solution. My logic was off with the iterations beginning and ending where they needed to, and also with unnecessary use of StringBuilder for first and second Elements. Key takeaway is that string.Join's fourth parameter is COUNT of elements to take, NOT ENDING INDEX of selected elements.
+
+//11-7-25
+/*Determine the total number of digits in the integer (n>=0) given as input to the function. For example, 9 is a single digit, 66 has 2 digits and 128685 has 6 digits. Be careful to avoid overflows/underflows.
+
+All inputs will be valid.
+*/
+
+public class DecTools {
+  public static int Digits(ulong n) {
+    return n.ToString().Length;
+  }
+}
