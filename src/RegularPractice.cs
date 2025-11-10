@@ -82,3 +82,29 @@ public class DecTools {
     return n.ToString().Length;
   }
 }
+
+//11-10-25
+/*In this kata, we will make a function to test whether a period is late.
+
+Our function will take three parameters:
+
+last - The Date object with the date of the last period
+
+today - The Date object with the date of the check
+
+cycleLength - Integer representing the length of the cycle in days
+
+Return true if the number of days passed from last to today is greater than cycleLength. Otherwise, return false.
+*/
+
+public static class Kata
+{
+  public static bool PeriodIsLate(DateTime last, DateTime today, int cycleLength)
+  {
+    var timeElapsed = last.Add(today - last);
+    var nextCycle = last.AddDays(cycleLength);
+    return timeElapsed > nextCycle;
+  }
+}
+
+//NOTES: last-today results in a TimeSpan object, which can be accessed with properties like .Days. I need .Add for timeElapsed bc it's adding TimeSpan to a DateTime, but I need .AddDays for nextCycle because it's adding an int to a Datetime.
