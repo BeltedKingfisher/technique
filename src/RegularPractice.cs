@@ -108,3 +108,43 @@ public static class Kata
 }
 
 //NOTES: last-today results in a TimeSpan object, which can be accessed with properties like .Days. I need .Add for timeElapsed bc it's adding TimeSpan to a DateTime, but I need .AddDays for nextCycle because it's adding an int to a Datetime.
+
+//11-11-25
+/*Remove the duplicates from a list of integers, keeping the last ( rightmost ) occurrence of each element.
+Example:
+
+For input: [3, 4, 4, 3, 6, 3]
+
+    remove the 3 at index 0
+    remove the 4 at index 1
+    remove the 3 at index 3
+
+Expected output: [4, 6, 3]
+
+More examples can be found in the test cases.
+
+Good luck!
+*/
+
+public class Solution
+{
+    public static int [] solve (int [] arr){
+      //identify which elements are duplicated
+      var duplicates = arr.GroupBy(x => x).Where(y => y.Count() > 1).Select(y => y.Key).ToArray();
+      List<int> newArr = new List<int>();
+      
+      //find the indexOf the highest occurence of the duplicate
+      foreach (var x in duplicates){
+        var highestIndex = Array.LastIndexOf(arr, x);
+        newArr = arr.Where((y, index) => y != x && index != highestIndex).ToList();
+      }
+     
+      return newArr.ToArray();
+    }
+}
+
+//NOTES: THIS SOLUTION DOESN"T WORK. But I learned that GroupBy returns a dictionary with key/values like (for an int collection) {0: 0, 1: 1, 1} etc. This solution doesn't work because I re-evaluate newArr every time. A better solution would be to work from right to left in a for loop OR use linq for reversing/distinct. This is my favorite solution on codewars (not mine!)
+
+/* public static int [] solve (int [] arr){
+       return arr.Reverse().Distinct().Reverse().ToArray();            
+  }*/
