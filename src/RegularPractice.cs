@@ -148,3 +148,34 @@ public class Solution
 /* public static int [] solve (int [] arr){
        return arr.Reverse().Distinct().Reverse().ToArray();            
   }*/
+
+//11-12-2025
+/*Count the number of occurrences of each character and return it as a (list of tuples) in order of appearance. For empty output return (an empty list).
+
+Consult the solution set-up for the exact data structure implementation depending on your language.
+
+Example:
+
+Kata.OrderedCount("abracadabra") == new List<Tuple<char, int>> () {
+  new Tuple<char, int>('a', 5),
+  new Tuple<char, int>('b', 2),
+  new Tuple<char, int>('r', 2), 
+  new Tuple<char, int>('c', 1),
+  new Tuple<char, int>('d', 1)
+}
+*/
+
+namespace Solution {
+    
+  public class Kata {
+        
+  public static List<Tuple<char, int>> OrderedCount(string input) {
+      var groupedData = input.GroupBy(x => x);
+      List<Tuple<char, int>> result = groupedData.Select(y => Tuple.Create(y.Key, y.Count())).ToList(); 
+      
+      return result;
+        }
+    }
+}
+
+/*NOTES: Luckily had a GroupBy question yesterday and remembered that it returns an IGrouping with Key and Element. Had to look up how to instantiate a Tuple to return the right data type*/
