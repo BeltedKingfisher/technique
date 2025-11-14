@@ -179,3 +179,29 @@ namespace Solution {
 }
 
 /*NOTES: Luckily had a GroupBy question yesterday and remembered that it returns an IGrouping with Key and Element. Had to look up how to instantiate a Tuple to return the right data type*/
+
+//11-14-25
+/*Complete the solution so that it returns a formatted string. The return value should equal "Value is VALUE" where value is a 5 digit padded number.
+
+Example:
+
+solution(5); // should return "Value is 00005"
+*/
+
+public class PaddedNumbers
+{
+  public static string Solution(int value)
+  {
+    var givenLength = value.ToString().Length;
+    var neededPadding = 5 - givenLength;
+    var zeroes = "00000";
+    var padding = new string(zeroes.Take(neededPadding).ToArray());
+    return $"Value is {padding}{value.ToString()}";
+  }
+}
+
+//NOTES: A better solution (that I found after solving) is public static string Solution(int value)
+// {
+//     return $"Value is {value:00000}";
+// }
+//which makes use of built in .NET formatting. But, it's good to know that .Take() returns an IEnumerable<char>, which I couldn't use in the interpolation and needed to convert it to a character Array and then a string (which is what makes this solution so wordy).
