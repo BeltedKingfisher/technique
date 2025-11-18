@@ -205,3 +205,103 @@ public class PaddedNumbers
 //     return $"Value is {value:00000}";
 // }
 //which makes use of built in .NET formatting. But, it's good to know that .Take() returns an IEnumerable<char>, which I couldn't use in the interpolation and needed to convert it to a character Array and then a string (which is what makes this solution so wordy).
+
+//11-18-2025
+/*Once upon a time, on a way through the old wild mountainous west,…
+
+… a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too.
+
+Going to one direction and coming back the opposite direction right away is a needless effort. Since this is the wild west, with dreadful weather and not much water, it's important to save yourself some energy, otherwise you might die of thirst!
+How I crossed a mountainous desert the smart way.
+
+The directions given to the man are, for example, the following (depending on the language):
+
+["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
+or
+{ "NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST" };
+or
+[North, South, South, East, West, North, West]
+
+You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
+
+["WEST"]
+or
+{ "WEST" }
+or
+[West]
+
+Other examples:
+
+In ["NORTH", "SOUTH", "EAST", "WEST"], the direction "NORTH" + "SOUTH" is going north and coming back right away.
+
+The path becomes ["EAST", "WEST"], now "EAST" and "WEST" annihilate each other, therefore, the final result is [] (nil in Clojure).
+
+In ["NORTH", "EAST", "WEST", "SOUTH", "WEST", "WEST"], "NORTH" and "SOUTH" are not directly opposite but they become directly opposite after the reduction of "EAST" and "WEST" so the whole path is reducible to ["WEST", "WEST"].
+Task
+
+Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
+
+    The Haskell version takes a list of directions with data Direction = North | East | West | South.
+    The Clojure version returns nil when the path is reduced to nothing.
+    The Rust version takes a slice of enum Direction {North, East, West, South}.
+    The OCaml version takes a list of type direction = | North | South | East | West.
+*/
+
+
+public class DirReduction {
+  
+    public static string[] dirReduc(String[] arr) {
+      List<string> listArr = arr.ToList();
+      List<string> newList = new List<string>();
+      var listIsFinished =  ((listArr.IndexOf("NORTH") - listArr.IndexOf("SOUTH")) != 1) 
+        &&  ((listArr.IndexOf("SOUTH") - listArr.IndexOf("NORTH")) != 1) 
+        && ((listArr.IndexOf("WEST") - listArr.IndexOf("EAST")) != 1)
+        && ((listArr.IndexOf("EAST") - listArr.IndexOf("WEST")) != 1);
+      
+      if((listArr.IndexOf("NORTH") - listArr.IndexOf("SOUTH")) == 1){
+        listArr.Remove("NORTH");
+        listArr.Remove("SOUTH");      
+      } else if((listArr.IndexOf("SOUTH") - listArr.IndexOf("NORTH")) == 1){
+        listArr.Remove("SOUTH");
+        listArr.Remove("NORTH");        
+      }if((listArr.IndexOf("EAST") - listArr.IndexOf("WEST")) == 1){
+        listArr.Remove("EAST");
+        listArr.Remove("WEST");      
+      } else if((listArr.IndexOf("WEST") - listArr.IndexOf("EAST")) == 1){
+        listArr.Remove("WEST");
+        listArr.Remove("EAST");        
+      }
+      
+         return listIsFinished ? listArr.ToArray() : newList.ToArray();
+    }
+}
+
+//NOTES: I don't like this solution! I think it would be nicer to create a dictionary with the relevant pairs and check the collection for those pairs and remove at the index. Also, this doesn't quite work yet - but I needed to move on from the problem for today. I think the problem is with the final bool and maybe moving on from using IndexOf. This is my favorite solution from the codewars site:
+/*
+public class DirReduction {
+  
+    public static string[] dirReduc(String[] arr) {
+        Dictionary<string, string> oppositeOf = new Dictionary<string, string>()
+        {
+            {"NORTH", "SOUTH"},
+            {"SOUTH", "NORTH"},
+            {"EAST", "WEST"},
+            {"WEST", "EAST"}
+        };
+    
+        List<string> betterDirections = new List<string>();
+        foreach (var direction in arr)
+        {
+            if (betterDirections.LastOrDefault() == oppositeOf[direction])
+            {
+                betterDirections.RemoveAt(betterDirections.Count - 1);
+            }
+            else
+            {
+                betterDirections.Add(direction);
+            }
+        }
+        return betterDirections.ToArray();
+    }
+}
+*/
