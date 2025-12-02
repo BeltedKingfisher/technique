@@ -333,3 +333,21 @@ public class Kata
 }
 
 //NOTES: Could collapse this further down into one line by returning integerList.Where(x => !valuesList.Contains(x)).ToArray();
+
+//12-2-25
+/*You will be given a string featuring a cat 'C' and a mouse 'm'. The rest of the string will be made up of '.'. The string will start with the cat, and end with the mouse.
+
+You need to find out if the cat can catch the mouse from its current position. The cat can jump over at most three characters. So:
+
+"C.....m" returns "Escaped!" <-- more than three characters between
+
+"C...m" returns "Caught!" <-- as there are three characters between the two, the cat can jump.
+*/
+
+public class Kata
+{
+  public static string CatMouse(string x)
+  {
+    return x.Length <=5 ? "Caught!" : "Escaped!";
+  }
+}
