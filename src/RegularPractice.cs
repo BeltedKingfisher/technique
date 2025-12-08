@@ -385,4 +385,20 @@ namespace Solution {
       return 0;
     }
   }
+  
+  //12-7-25
+  /*Write function parseFloat which takes an input and returns a number or Nothing if conversion is not possible.*/
+  public class Kata
+{
+  public static double? ParseF(object s = null)
+  {
+    double x;
+    if(double.TryParse(s?.ToString(), out x)){
+      return x;
+    }
+    
+    return null;
+  }
 }
+
+//NOTES: This was harder than I originally thought! Covert.ToDouble(s) didn't fulfill the "return null if conversion is not possible" requirement. double.TryParse(s?.ToString(), out x) needs to be treated like a boolean, with the result of the conversion being tossed inside x, which needs to be defined before the function runs. Also, x can't be defined as null (like double x = null) because doubles aren't a nullable data type. Needed null handling on s as well, even though it was in a TryParse statement. (I had originally assumed TryParse's error handling would catch that too)
